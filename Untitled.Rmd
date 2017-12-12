@@ -1,0 +1,29 @@
+---
+title: "Histograms"
+output: html_document
+---
+A Histogram is a graphical display where the data is grouped into ranges and then plotted as bars. Histograms are what people often think of as bar graphs. They show the spread and shape of a single set of data. For our example, let’s look at the weights of MLB players through the Master table in the Lahman database.
+
+```{r}
+library(Lahman)
+library(sqldf)
+library(ggplot2)
+```
+
+
+Here is the SQL request:
+```{r}
+query<-"SELECT weight FROM Master"
+result<-sqldf(query)
+```
+
+Turning the data into a histogram is very similar to turning data into a scatterplot. Again, pieces are pretty clear and distinct in the ggplot script, so we are going to do everthing at once.
+
+```{r}
+ggplot()+
+  geom_histogram(data=result,aes(x=weight),color="blue",fill="white",bins=60)+
+  ggtitle("Distribution of Baseball Player Bodyweight")+
+  xlab("Weight of player")+
+  ylab("Number of players")
+```
+
