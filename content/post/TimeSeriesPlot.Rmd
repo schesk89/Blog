@@ -1,5 +1,6 @@
+#Time Series Plot
 ---
-title: "Time Series Plot"
+title: "TimeSeriesPlot"
 output: html_document
 ---
 A Time Series Plot is displays values against time. Time is unfolding along the x-axis. THe y-axis, on the other hand, has some other variable and we can see how it changes over time. A time series is similar to a scatterplot, in the way that it has two sets of data against each other. However, one of those sets of data is time. 
@@ -26,4 +27,3 @@ ggplot()+
   xlab("Year")+
   ylab("Number of Homeruns")
 ```
-

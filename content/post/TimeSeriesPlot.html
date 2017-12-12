@@ -1,0 +1,33 @@
+---
+title: "TimeSeriesPlot"
+output: html_document
+---
+
+
+
+<div id="time-series-plot" class="section level2">
+<h2>#Time Series Plot</h2>
+<p>title: “TimeSeriesPlot” output: html_document — A Time Series Plot is displays values against time. Time is unfolding along the x-axis. THe y-axis, on the other hand, has some other variable and we can see how it changes over time. A time series is similar to a scatterplot, in the way that it has two sets of data against each other. However, one of those sets of data is time.</p>
+<pre class="r"><code>library(Lahman)
+library(sqldf)</code></pre>
+<pre><code>## Loading required package: gsubfn</code></pre>
+<pre><code>## Loading required package: proto</code></pre>
+<pre><code>## Warning in doTryCatch(return(expr), name, parentenv, handler): unable to load shared object &#39;/Library/Frameworks/R.framework/Resources/modules//R_X11.so&#39;:
+##   dlopen(/Library/Frameworks/R.framework/Resources/modules//R_X11.so, 6): Library not loaded: /opt/X11/lib/libSM.6.dylib
+##   Referenced from: /Library/Frameworks/R.framework/Resources/modules//R_X11.so
+##   Reason: image not found</code></pre>
+<pre><code>## Could not load tcltk.  Will use slower R code instead.</code></pre>
+<pre><code>## Loading required package: RSQLite</code></pre>
+<pre class="r"><code>library(ggplot2)</code></pre>
+<p>We will look at Babe Ruth’s homeruns over his twenty-two seasons. Here is the sql request:</p>
+<pre class="r"><code>query&lt;-&quot;SELECT yearID,HR FROM Batting WHERE playerID=&#39;ruthba01&#39;&quot;
+result&lt;-sqldf(query)</code></pre>
+<p>Now, we will put it into the time series visualization! This process is almost exactly the same as the process we used for scatterplots. The only difference is that because the data is spread over time, we can connect the data points to make a nice line.</p>
+<pre class="r"><code>ggplot()+
+  geom_point(data=result,aes(x=yearID,y=HR),size=1/2)+
+  geom_line(data=result,aes(x=yearID,y=HR))+
+  ggtitle(&quot;Babe Ruth&#39;s Homeruns by Year&quot;)+
+  xlab(&quot;Year&quot;)+
+  ylab(&quot;Number of Homeruns&quot;)</code></pre>
+<p><img src="/post/TimeSeriesPlot_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+</div>
