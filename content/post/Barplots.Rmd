@@ -1,0 +1,31 @@
+---
+title: "Barplots"
+output: html_document
+---
+A Barplot is a graph drawn using rectangular bars to show how large each valuse is. A bar plot lays out the different levels of an attribute or factor! 
+
+```{r}
+library(Lahman)
+library(sqldf)
+library(ggplot2)
+```
+
+We will look at the team homerun totals for all the MLB teams in 1980.
+```{r}
+query<-"SELECT name,HR FROM Teams WHERE yearID=1980 ORDER BY HR "
+result<-sqldf(query)
+
+result$name<-factor(result$name,levels=result$name)
+```
+
+The last line is saving the information as a factor, and letting the system know that the order the results appear in the order we specified, not default alphabetical.  It is the same process as the other data visualizations that we have done through ggplot2. Differences are: saying geom_bar to specify bar plot format, saying stat=‘identity’ to get the correct label, and using coord_flip to put the bars horizontal instead of vertical.
+
+```{r}
+ggplot()+
+  geom_bar(data=result,aes(x=name,y=HR),stat='identity')+
+  coord_flip()+
+  ggtitle("1980 Team Homerun Totals")+
+  xlab("Team Name")+
+  ylab("Homeruns")
+```
+

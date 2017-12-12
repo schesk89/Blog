@@ -1,0 +1,29 @@
+---
+title: "Time Series Plot"
+output: html_document
+---
+A Time Series Plot is displays values against time. Time is unfolding along the x-axis. THe y-axis, on the other hand, has some other variable and we can see how it changes over time. A time series is similar to a scatterplot, in the way that it has two sets of data against each other. However, one of those sets of data is time. 
+
+```{r}
+library(Lahman)
+library(sqldf)
+library(ggplot2)
+```
+
+We will look at Babe Ruth’s homeruns over his twenty-two seasons. Here is the sql request:
+```{r}
+query<-"SELECT yearID,HR FROM Batting WHERE playerID='ruthba01'"
+result<-sqldf(query)
+```
+
+Now, we will put it into the time series visualization! This process is almost exactly the same as the process we used for scatterplots. The only difference is that because the data is spread over time, we can connect the data points to make a nice line.
+
+```{r}
+ggplot()+
+  geom_point(data=result,aes(x=yearID,y=HR),size=1/2)+
+  geom_line(data=result,aes(x=yearID,y=HR))+
+  ggtitle("Babe Ruth's Homeruns by Year")+
+  xlab("Year")+
+  ylab("Number of Homeruns")
+```
+
